@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Learner dictionary</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+	<script src="~/Scripts/vue.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+					<li>@Html.ActionLink("Word", "Index", "Word")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Learner dictionary</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script>
+        $('#examples-add').on('click', function () {
+            var $btn = $('#examples-add');
+            var $li = $btn.closest('li');
+            $li.before('<li><input class="form-control valid" id="Examples_0__Text" name="Examples[0].Text" type="text" value="" autocomplete="off"></li>');
+
+            var i = 0;
+            $('#examples li').each(function () {
+                $this = $(this);
+                $input = $this.find('input');
+                $input.attr('id', 'Examples_' + i + '__Text');
+                $input.attr('name', 'Examples[' + i + '].Text');
+
+                i++;
+            });
+        });
+    </script>
+</body>
+</html>
