@@ -14,5 +14,6 @@ namespace LearnerDictionary.Models.ViewModels
 		public WordStatus Status { get; set; }
         public double Score { get; set; }
         public bool HasDefintion { get; set; }
+        public IEnumerable<WordExampleViewModel> Examples { get; set; }
     }
 }

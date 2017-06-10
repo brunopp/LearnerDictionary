@@ -30,6 +30,15 @@
         </tr>
     </thead>
     <tbody>
+        <tr v-for="word in words" v-bind:class="[ word.Status == 1 ? 'success' : word.Status == 2 ? 'warning' : 'danger' ]">
+            <td>{{word.Value}}</td>
+            <td>{{word.Score}}</td>
+            <td>{{word.Language}}</td>
+            <td class="definition">{{word.Definition}}</td>
+            <th></th>
+        </tr>
+    </tbody>
+    <tbody>
         @foreach (var item in Model.WordsWithoutDefinition)
         {
             <tr class="@(item.Status == WordStatus.Known ? "success" : item.Status == WordStatus.Shaky ? "warning" : "danger")">
@@ -86,3 +95,30 @@
     </tbody>
 
 </table>
+
+@section Scripts {
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            words: []
+        },
+        methods: {
+            load: function () {
+                var self = this;
+
+                $.ajax({
+                    url: '/api/wordapi/getwords',
+                    method: 'GET',
+                    success: function (data) {
+                        self.words = data;
+                    }
+                });
+            }
+        },
+        created: function () {
+            this.load();
+        }
+    });
+</script>
+}

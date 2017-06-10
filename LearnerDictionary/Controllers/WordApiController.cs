@@ -13,10 +13,12 @@ namespace LearnerDictionary.Controllers
     public class WordApiController : ApiController
 	{
 		private readonly Context _context;
+        private readonly IMapper _mapper;
 
-        public WordApiController(Context context)
+        public WordApiController(Context context, IMapper mapper)
 		{
 			_context = context;
+            _mapper = mapper;
         }
 
         public void PostWord(WordFormViewModel model)
@@ -66,5 +68,12 @@ namespace LearnerDictionary.Controllers
 				_context.SaveChanges();
 			}
 		}
+
+        public IEnumerable<WordViewModel> GetWords()
+        {
+            var words = _context.Words.Include("Examples").OrderBy(x => x.Value).ToList();
+
+            return _mapper.Map<IEnumerable<WordViewModel>>(words);
+        }
     }
 }

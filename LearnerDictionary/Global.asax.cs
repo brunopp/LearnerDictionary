@@ -41,6 +41,8 @@ namespace LearnerDictionary
 			container.Register<Context>(Lifestyle.Scoped);
 			container.Register(() => new Random(), Lifestyle.Singleton);
 
+            container.Register(() => CreateAutoMapper());
+
 			// This is an extension method from the integration package.
 			container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
 
@@ -49,6 +51,18 @@ namespace LearnerDictionary
 			DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
 
 			GlobalConfiguration.Configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(container);
+        }
+
+        private IMapper CreateAutoMapper()
+        {
+            var m = new AutoMapper.Mapper(new MapperConfiguration((c) =>
+            {
+                c.CreateMap<Word, WordViewModel>()
+                .ForMember(x => x.Language, opt => opt.MapFrom(src => src.Language.Value));
+                c.CreateMap<WordExample, WordExampleViewModel>();
+            }));
+
+            return m;
         }
 	}
 }
