@@ -35,6 +35,11 @@ namespace LearnerDictionary.Controllers
 				Recognize = model.Recognize
 			});
 
+			if (word.LearningDone)
+			{
+				word.IsLearning = false;
+			}
+
 			_context.SaveChanges();
 		}
 

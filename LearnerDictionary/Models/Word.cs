@@ -54,6 +54,14 @@ namespace LearnerDictionary.Models
                 return _score.Value;
 			}
 		}
+		
+		public bool HasAttempts
+		{
+			get
+			{
+				return Examples.Any();
+			}
+		}
 
         private WordStatus? _status = null;
         public WordStatus Status
@@ -83,7 +91,16 @@ namespace LearnerDictionary.Models
         }
 
         public bool HasDefintion => !string.IsNullOrWhiteSpace(Definition);
-    }
+
+		public bool IsLearning { get; set; }
+		public bool LearningDone
+		{
+			get
+			{
+				return Status == WordStatus.Known;
+			}
+		}
+	}
 
     public enum WordStatus
     {

@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201704282111528_addWordExample.Designer.cs">
       <DependentUpon>201704282111528_addWordExample.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707021100580_addIsLearning.cs" />
+    <Compile Include="Migrations\201707021100580_addIsLearning.Designer.cs">
+      <DependentUpon>201707021100580_addIsLearning.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\LDUser.cs" />
@@ -325,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704282111528_addWordExample.resx">
       <DependentUpon>201704282111528_addWordExample.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707021100580_addIsLearning.resx">
+      <DependentUpon>201707021100580_addIsLearning.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

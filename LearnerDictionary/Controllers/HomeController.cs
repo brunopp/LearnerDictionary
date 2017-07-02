@@ -1,4 +1,5 @@
-﻿using LearnerDictionary.Models.ViewModels;
+﻿using LearnerDictionary.Models;
+using LearnerDictionary.Models.ViewModels;
 using LearnerDictionary.Repository;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,22 @@ namespace LearnerDictionary.Controllers
 
 			var words = _context.Words.Include("Attempts").Include("Examples").ToList().Where(x => x.HasDefintion);
 
-            var word = words.OrderBy(x => x.Score * rng.NextDouble() + rng.NextDouble()).FirstOrDefault();
+			var wordsByAttemptsAndScore = words.OrderByDescending(x => x.IsLearning).ThenByDescending(x => x.HasAttempts).ThenBy(x => x.Score);
+			var wordsInProcess = wordsByAttemptsAndScore.Take(20);
+
+			var updateWords = wordsInProcess.Where(x => !x.IsLearning);
+			if (updateWords.Any())
+			{
+				foreach (var updateWord in updateWords)
+				{
+					updateWord.IsLearning = true;
+				}
+				_context.SaveChanges();
+			}
+
+			var relevantWords = new List<Word>();
+
+            var word = wordsInProcess.OrderBy(x => x.Score * rng.NextDouble() + rng.NextDouble()).FirstOrDefault();
 
 			return View(new WordFormViewModel
 			{
