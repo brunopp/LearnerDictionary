@@ -26,7 +26,7 @@ namespace LearnerDictionary.Controllers
 			var rng = new Random(seed);
 			var now = DateTime.UtcNow;
 
-			var words = _context.Words.Include("Attempts").Include("Examples").ToList().Where(x => x.HasDefintion);
+			var words = _context.Words.Include("Attempts").Include("Examples").ToList();
 
 			var wordsByAttemptsAndScore = words.OrderByDescending(x => x.IsLearning).ThenByDescending(x => x.HasAttempts).ThenBy(x => x.Score);
 			var wordsInProcess = wordsByAttemptsAndScore.Take(20);
