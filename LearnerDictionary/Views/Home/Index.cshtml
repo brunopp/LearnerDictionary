@@ -114,6 +114,7 @@
 			<button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#collapseDefinition" aria-expanded="false" aria-controls="collapseDefinition">
 				Show definition...
 			</button>
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" v-if="hasDefinition"></span>
 			<br /><br />
 			<div class="collapse" id="collapseDefinition">
 				<div class="well">
@@ -143,7 +144,8 @@
 			el: '#app',
             data: {
                 id: '@Model.Id',
-                value: '@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.Value))',
+				value: '@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.Value))',
+				hasDefinition: @string.IsNullOrWhiteSpace(Model.Definition).ToString().ToLower(),
                 language: '@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.Language))',
 				examples: [
 					@foreach (var example in Model.Examples)
