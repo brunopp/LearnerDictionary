@@ -232,6 +232,7 @@
       <DependentUpon>201707021100580_addIsLearning.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DateTimeExtentions.cs" />
     <Compile Include="Models\Language.cs" />
     <Compile Include="Models\LDUser.cs" />
     <Compile Include="Models\SkipPasswordHasher.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Owin.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
@@ -8,7 +9,7 @@ using System.Web;
 namespace LearnerDictionary.Models
 {
 	[Table("Word")]
-	public class Word
+	public class Word : ISystemClock
 	{
 		public Word()
 		{
@@ -93,11 +94,76 @@ namespace LearnerDictionary.Models
         public bool HasDefintion => !string.IsNullOrWhiteSpace(Definition);
 
 		public bool IsLearning { get; set; }
+
+		/// <summary>
+		/// Returns true if the learning is done.
+		/// For the word to have learning done the word's latest 15 attempts must be good and spread over at least 3 days.
+		/// </summary>
 		public bool LearningDone
 		{
 			get
 			{
-				return Status == WordStatus.Known;
+				if (!Attempts.Any())
+				{
+					return false;
+				}
+
+				// take 5 latest attempts grouped by day
+				var groupedByDay = Attempts.GroupBy(x => x.CreatedUtc.Today(), e => e, (k, v) => v.OrderByDescending(x => x.CreatedUtc.Today()));
+				if (groupedByDay.Count() < 3)
+				{
+					return false;
+				}
+
+				var last15Attempts = groupedByDay.SelectMany(x => x).OrderByDescending(x => x.CreatedUtc).Take(15);
+				if (last15Attempts.All(x => x.Recognize))
+				{
+					return true;
+				}
+
+				return false;
+			}
+		}
+
+		/// <summary>
+		/// Returns true if the word is relevant today.
+		/// The word is relevant if IsLearning is true and the word's 5 latest attempts today are not all recognized.
+		/// </summary>
+		public bool RelevantToday
+		{
+			get
+			{
+				if (!IsLearning)
+				{
+					return false;
+				}
+				
+				var todayAttempts = Attempts.Where(x => x.CreatedUtc.Today() == UtcNow.DateTime.Today()).OrderByDescending(x => x.CreatedUtc);
+				if (todayAttempts.Count() >= 5 && todayAttempts.Take(5).All(x => x.Recognize))
+				{
+					return false;
+				}
+
+				return true;
+			}
+		}
+
+		private DateTimeOffset? _utcNow;
+		[NotMapped]
+		public DateTimeOffset UtcNow
+		{
+			get
+			{
+				if (_utcNow == null)
+				{
+					return DateTimeOffset.UtcNow;
+				}
+
+				return _utcNow.Value;
+			}
+			set
+			{
+				_utcNow = value;
 			}
 		}
 	}
