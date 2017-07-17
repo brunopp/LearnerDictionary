@@ -127,17 +127,12 @@ namespace LearnerDictionary.Models
 
 		/// <summary>
 		/// Returns true if the word is relevant today.
-		/// The word is relevant if IsLearning is true and the word's 5 latest attempts today are not all recognized.
+		/// The word is relevant if the word's 4 latest attempts today are not all recognized.
 		/// </summary>
 		public bool RelevantToday
 		{
 			get
 			{
-				if (!IsLearning)
-				{
-					return false;
-				}
-				
 				var todayAttempts = Attempts.Where(x => x.CreatedUtc.Today() == UtcNow.DateTime.Today()).OrderByDescending(x => x.CreatedUtc);
 				if (todayAttempts.Count() >= 4 && todayAttempts.Take(4).All(x => x.Recognize))
 				{
