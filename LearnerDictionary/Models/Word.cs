@@ -139,7 +139,7 @@ namespace LearnerDictionary.Models
 				}
 				
 				var todayAttempts = Attempts.Where(x => x.CreatedUtc.Today() == UtcNow.DateTime.Today()).OrderByDescending(x => x.CreatedUtc);
-				if (todayAttempts.Count() >= 5 && todayAttempts.Take(5).All(x => x.Recognize))
+				if (todayAttempts.Count() >= 4 && todayAttempts.Take(4).All(x => x.Recognize))
 				{
 					return false;
 				}

@@ -53,12 +53,12 @@ namespace LearnerDictionary.Test
 		}
 
 		[TestMethod]
-		public void TestRelevantToday_IsLearningWith4GoodAttempts_ReturnsTrue()
+		public void TestRelevantToday_IsLearningWith3GoodAttempts_ReturnsTrue()
 		{
 			var word = new Word();
 			word.IsLearning = true;
 			word.Attempts = new List<WordAttempt>();
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 3; i++)
 			{
 				word.Attempts.Add(new WordAttempt
 				{
