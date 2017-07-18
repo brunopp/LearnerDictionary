@@ -36,7 +36,8 @@ namespace LearnerDictionary.Controllers
 					Value = word.Value,
 					Status = word.Status,
                     Score = word.Score,
-                    HasDefintion = word.HasDefintion
+                    HasDefintion = word.HasDefintion,
+					Deleted = word.Deleted
 				});
 			}
 

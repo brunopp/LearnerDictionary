@@ -28,7 +28,7 @@ namespace LearnerDictionary.Controllers
 
 			var words = _context.Words.Include("Attempts").Include("Examples").ToList();
 
-			var wordsByAttemptsAndScore = words.Where(x => x.RelevantToday).OrderByDescending(x => x.IsLearning).ThenBy(x => x.Score);
+			var wordsByAttemptsAndScore = words.Where(x => !x.Deleted && x.RelevantToday).OrderByDescending(x => x.IsLearning).ThenBy(x => x.Score);
 			var wordsInProcess = wordsByAttemptsAndScore.Take(20);
 
 			var updateWords = wordsInProcess.Where(x => !x.IsLearning);

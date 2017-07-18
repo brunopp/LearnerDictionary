@@ -231,6 +231,10 @@
     <Compile Include="Migrations\201707021100580_addIsLearning.Designer.cs">
       <DependentUpon>201707021100580_addIsLearning.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707181502505_addDeleted.cs" />
+    <Compile Include="Migrations\201707181502505_addDeleted.Designer.cs">
+      <DependentUpon>201707181502505_addDeleted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DateTimeExtentions.cs" />
     <Compile Include="Models\Language.cs" />
@@ -333,6 +337,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707021100580_addIsLearning.resx">
       <DependentUpon>201707021100580_addIsLearning.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707181502505_addDeleted.resx">
+      <DependentUpon>201707181502505_addDeleted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

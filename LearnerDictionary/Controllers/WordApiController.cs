@@ -71,5 +71,12 @@ namespace LearnerDictionary.Controllers
 				_context.SaveChanges();
 			}
 		}
+
+		public void Delete(int id)
+		{
+			var word = _context.Words.FirstOrDefault(x => x.Id == id);
+			word.Deleted = true;
+			_context.SaveChanges();
+		}
     }
 }

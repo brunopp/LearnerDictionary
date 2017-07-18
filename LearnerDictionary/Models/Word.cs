@@ -161,6 +161,8 @@ namespace LearnerDictionary.Models
 				_utcNow = value;
 			}
 		}
+
+		public bool Deleted { get; set; }
 	}
 
     public enum WordStatus
